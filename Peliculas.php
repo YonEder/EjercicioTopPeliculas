@@ -2,26 +2,26 @@
 
 class Peliculas
 {
-    public $nombrepelicula;
+    public $nombre;
     public $isan;
     public $year;
     public $puntuacion;
     
-    public function __construct($nombrepelicula, $isan, $year, $puntuacion)
+    public function __construct($nombre, $isan, $year, $puntuacion)
     {
-        $this->nombrePelicula = $nombrepelicula;
+        $this->nombre = $nombre;
         $this->isan = $isan;
         $this->year = $year;
         $this->puntuacion = $puntuacion;
     }
 
-    public function getNombrePelicula()
+    public function getNombre()
     {
-        return $this->nombrePelicula;
+        return $this->nombre;
     }
-    public function setNombrePelicula($nombrepelicula)
+    public function setNombre($nombre)
     {
-        $this->nombrePelicula = $nombrepelicula;
+        $this->nombre = $nombre;
     }
     public function getIsan()
     {
