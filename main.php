@@ -1,4 +1,3 @@
-```php
 <?php
 
 require_once 'Peliculas.php';
@@ -169,15 +168,36 @@ for ($i = 0; $i < count($peliculas); $i++) {
     echo "<th>Puntuación</th>";
     echo "</tr>";
 
-    for ($i = 0; $i < count($peliculas); $i++) {
-
-        echo "<tr>";
-        echo "<td>" . $peliculas[$i]->getNombre() . "</td>";
-        echo "<td>" . $peliculas[$i]->getIsan() . "</td>";
-        echo "<td>" . $peliculas[$i]->getYear() . "</td>";
-        echo "<td>" . $peliculas[$i]->getPuntuacion() . "</td>";
-        echo "</tr>";
-    }
+    //Mostrar las peliculas si solamente se ha introducido el nombre de la pelicula
+    if($isan == "" && $nombre != "")
+        {
+            for($i = 0; $i < count($peliculas); $i++)
+                {
+                    if($peliculas[$i]->getNombre() == $nombre)
+                        {
+                            echo "<tr>";
+                            echo "<td>" . $peliculas[$i]->getNombre() . "</td>";
+                            echo "<td>" . $peliculas[$i]->getIsan() . "</td>";
+                            echo "<td>" . $peliculas[$i]->getYear() . "</td>";
+                            echo "<td>" . $peliculas[$i]->getPuntuacion() . "</td>";
+                            echo "</tr>";
+                        }
+                    
+                }
+        }
+    else
+        {
+            for ($i = 0; $i < count($peliculas); $i++) 
+            {
+                echo "<tr>";
+            echo "<td>" . $peliculas[$i]->getNombre() . "</td>";
+            echo "<td>" . $peliculas[$i]->getIsan() . "</td>";
+            echo "<td>" . $peliculas[$i]->getYear() . "</td>";
+            echo "<td>" . $peliculas[$i]->getPuntuacion() . "</td>";
+            echo "</tr>";
+            }
+        }
+    
 
     echo "</table>";
 
