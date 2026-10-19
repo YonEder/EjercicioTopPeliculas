@@ -1,5 +1,9 @@
 <?php
-
+if(isset($_COOKIE['usuario']) && $_COOKIE['usuario'] != "")
+    {
+        header("Location: versionCookies.php");
+        exit;
+    }
 if(isset($_POST['name']) && $_POST['name'] != "")
     {
         setcookie("usuario", $_POST['name'], time() + 86400, "/");
