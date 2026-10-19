@@ -1,27 +1,37 @@
 <?php
+session_start();
 
-    session_start();
+if (isset($_POST['guardar'])) {
 
-    if(isset($_POST['guardar']))
-        {
-            $_SESSION = $_POST['user'];
-            header("Location: versionSession.php");
-            exit;
+    $usuario = trim($_POST['user'] ?? '');
+
+    if ($usuario != "") {
+
+        $_SESSION['usuario'] = $usuario;
+
+        if (!isset($_SESSION['peliculasPorUsuario'][$usuario])) {
+            $_SESSION['peliculasPorUsuario'][$usuario] = [];
         }
 
+        header("Location: versionSession.php");
+        exit;
+    }
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Iniciar sesión</title>
 </head>
 <body>
+
     <form action="" method="post">
-        Introduce tu nombre <input type="text" name="user">
-        <button type="submit" name="guardar">Enter</button>
-    </form>    
+        Introduce tu nombre:
+        <input type="text" name="user" required>
+        <button type="submit" name="guardar">Entrar</button>
+    </form>
+
 </body>
 </html>

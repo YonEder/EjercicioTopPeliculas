@@ -4,39 +4,25 @@ require_once 'Peliculas.php';
 
 session_start();
 
-if(!isset($_SESSION['peliculas']))
-    {
-        $_SESSION['peliculas'] = [];
-    }
+if (!isset($_SESSION['usuario'])) {
+    header("Location: indexVersionSession.php");
+    exit;
+}
 
-$peliculas = &$_SESSION['peliculas'];
+$usuario = $_SESSION['usuario'];
+
+// Crear la lista de ese usuario si no existe
+if (!isset($_SESSION['peliculasPorUsuario'][$usuario])) {
+    $_SESSION['peliculasPorUsuario'][$usuario] = [];
+}
+
+// Trabajar directamente con su lista
+$peliculas = &$_SESSION['peliculasPorUsuario'][$usuario];
+
 $nombre = "";
 $isan = "";
 $year = "";
 $puntuacion = "1";
-
-//Recuperar Peliculas del hidden
-if (isset($_POST['peliculas']) && $_POST['peliculas'] != "") {
-
-    $textoPeliculas = $_POST['peliculas'];
-    $datosPeliculas = explode(";", $textoPeliculas);
-
-    for ($i = 0; $i < count($datosPeliculas); $i++) {
-
-        $datos = explode(",", $datosPeliculas[$i]);
-
-        if (count($datos) == 4) {
-            $pelicula = new Peliculas(
-                $datos[0],
-                $datos[1],
-                $datos[2],
-                $datos[3]
-            );
-
-            $peliculas[] = $pelicula;
-        }
-    }
-}
 
 //Recibir datos del formulario
 if (isset($_POST['submit'])) {
@@ -93,25 +79,6 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-
-//Convertir el array en texto
-$textoPeliculas = "";
-
-for ($i = 0; $i < count($peliculas); $i++) {
-
-    if ($i > 0) {
-        $textoPeliculas .= ";";
-    }
-
-    $textoPeliculas .= $peliculas[$i]->getNombre();
-    $textoPeliculas .= ",";
-    $textoPeliculas .= $peliculas[$i]->getIsan();
-    $textoPeliculas .= ",";
-    $textoPeliculas .= $peliculas[$i]->getYear();
-    $textoPeliculas .= ",";
-    $textoPeliculas .= $peliculas[$i]->getPuntuacion();
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -127,7 +94,7 @@ for ($i = 0; $i < count($peliculas); $i++) {
 
     <h1>TOP PELICULAS</h1>
 
-    <form action="main.php" method="post">
+    <form action="versionSession.php" method="post">
 
         Nombre:
         <input type="text" name="nombre">
@@ -158,8 +125,6 @@ for ($i = 0; $i < count($peliculas); $i++) {
         <button type="submit" name="submit">
             Enviar
         </button>
-
-        <input type="hidden" name="peliculas" value="<?php echo htmlspecialchars($textoPeliculas, ENT_QUOTES, 'UTF-8'); ?>">
 
     </form>
 
